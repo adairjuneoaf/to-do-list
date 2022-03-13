@@ -126,5 +126,9 @@ export const Content = styled.aside`
         color: var(--white);
       }
     }
+
+    .activeRoute {
+      background: var(--blue-300);
+    }
   }
 `;

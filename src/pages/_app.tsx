@@ -8,19 +8,19 @@ import Logo from "./components/Logo";
 
 import MenuContextProvider from "../contexts/contextMenuToggle";
 
-import { Container } from "../styles/pages/_app";
+import { Container, Content } from "../styles/pages/_app";
 import GlobalStyle from "../styles/global";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MenuContextProvider>
       <Container>
-        <section className="topPage">
+        <Content>
           <ButtonMenu />
           <Logo />
-        </section>
-        <Menu />
+        </Content>
         <Component {...pageProps} />
+        <Menu />
       </Container>
       <GlobalStyle />
     </MenuContextProvider>

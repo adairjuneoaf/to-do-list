@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 
 import { BiTask } from "react-icons/bi";
@@ -10,6 +11,8 @@ import { Content } from "../../styles/components/Menu";
 
 const Menu: React.FC = () => {
   const { closeSideBarMenu, isOpenMenu } = useContext(MenuContext);
+
+  const { route } = useRouter();
 
   return (
     <Content className={`${isOpenMenu ? "activeMenu" : ""}`}>
@@ -29,13 +32,13 @@ const Menu: React.FC = () => {
 
       <section className="menuOptions">
         <Link href={"/tasks"} passHref>
-          <button type="button" title="Tarefas">
+          <button type="button" title="Tarefas" className={route === "/tasks" ? "activeRoute" : ""}>
             <BiTask className="iconOptionsMenu" />
             <p>Tarefas</p>
           </button>
         </Link>
         <Link href={"/about"} passHref>
-          <button type="button" title="Sobre">
+          <button type="button" title="Sobre" className={route === "/about" ? "activeRoute" : ""}>
             <FiInfo className="iconOptionsMenu" />
             <p>Sobre</p>
           </button>
