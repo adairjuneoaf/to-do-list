@@ -17,7 +17,12 @@ export default createGlobalStyle`
   --blue-300: #418CFF;
   --blue-600: #0C3B79; 
 
-  --background: linear-gradient(90deg, #67A3FF 0%, #418CFF 100%);
+  --blue-gradient: linear-gradient(90deg, #67A3FF 0%, #418CFF 100%);
+}
+
+.activeMenu {   
+    display: block;
+    visibility: visible;
 }
 
 html{
