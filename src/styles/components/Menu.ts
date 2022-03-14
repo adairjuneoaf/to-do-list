@@ -7,14 +7,25 @@ export const Content = styled.aside`
   padding: 2rem 1rem;
 
   top: 0;
-  left: 0;
+  left: -196px;
 
   background: linear-gradient(120deg, #67a3ff 0%, #418cff 100%);
 
   position: absolute;
 
-  display: none;
-  visibility: hidden;
+  &.activeMenu {
+    left: 0;
+    opacity: 1;
+
+    transition: left 0.6s, opacity 0.3s;
+  }
+
+  &.inactiveMenu {
+    transition: left 0.6s, opacity 0.3s;
+
+    left: -196px;
+    opacity: 0;
+  }
 
   .closeMenu {
     position: absolute;
@@ -85,45 +96,54 @@ export const Content = styled.aside`
   }
 
   .menuOptions {
-    display: flex;
-    flex-direction: column;
-    //justify-content: flex-start;
-
-    gap: 0.5rem;
-
-    button {
-      width: 100%;
-      height: 40px;
-
-      border: 0;
-      border-radius: 10px;
-
-      font-size: 0;
-
+    ul {
+      list-style: none;
       display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: flex-start;
+      flex-direction: column;
 
-      gap: 1rem;
-      padding: 1rem;
+      gap: 0.5rem;
 
-      background: transparent;
+      li {
+        width: 100%;
+        height: 40px;
 
-      transition: background-color 0.2s;
+        border-radius: 10px;
 
-      &:hover {
-        background: var(--blue-300);
-      }
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
 
-      .iconOptionsMenu {
-        font-size: 24px;
-        color: var(--white);
-      }
-
-      p {
         font-size: 0.875rem;
         color: var(--white);
+
+        cursor: pointer;
+
+        transition: background-color 0.2s;
+
+        &:hover {
+          background: var(--blue-300);
+        }
+
+        button {
+          border: 0;
+
+          font-size: 0;
+
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          justify-content: flex-start;
+
+          padding: 1rem;
+
+          background: transparent;
+
+          .iconOptionsMenu {
+            font-size: 24px;
+            color: var(--white);
+          }
+        }
       }
     }
 

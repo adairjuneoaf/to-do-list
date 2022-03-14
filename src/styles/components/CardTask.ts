@@ -23,11 +23,17 @@ export const Container = styled.section`
     .activeTooltipMenuOptions {
       display: block;
       visibility: visible;
+
+      transition: all 0.3s;
+      opacity: 1;
     }
 
     .inactiveTooltipMenuOptions {
       display: none;
       visibility: hidden;
+
+      transition: all 0.3s;
+      opacity: 0;
     }
 
     .optionsMenu {
@@ -39,16 +45,18 @@ export const Container = styled.section`
 
       background: var(--white);
 
-      border-radius: 6px;
+      border-radius: 6px 0 6px 6px;
 
       top: 0;
-      left: -124px;
+      left: -131px;
 
       display: flex;
       align-items: flex-start;
       flex-direction: column;
 
       gap: 0.25rem;
+
+      box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.1);
 
       a {
         width: 100%;
@@ -77,6 +85,20 @@ export const Container = styled.section`
         .iconOption {
           font-size: 14px;
         }
+      }
+
+      &::after {
+        content: "";
+        width: 9px;
+        height: 25px;
+        background: var(--white);
+
+        position: absolute;
+
+        right: -8.5px;
+        top: -0.5px;
+
+        clip-path: polygon(100% 50%, 0 0, 0 100%);
       }
     }
   }

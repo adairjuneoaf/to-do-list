@@ -7,6 +7,9 @@ interface MenuContextProviderProps {
 
 interface MenuContextProps {
   isOpenMenu: boolean;
+  isModalTaskOpen: boolean;
+  openModalTask: () => void;
+  closeModalTask: () => void;
   openSideBarMenu: () => void;
   closeSideBarMenu: () => void;
 }
@@ -15,6 +18,7 @@ export const MenuContext = createContext({} as MenuContextProps);
 
 const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [isModalTaskOpen, setIsModalTaskOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -30,7 +34,19 @@ const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) =
     setIsOpenMenu(false);
   }
 
-  return <MenuContext.Provider value={{ isOpenMenu, openSideBarMenu, closeSideBarMenu }}>{children}</MenuContext.Provider>;
+  function openModalTask() {
+    setIsModalTaskOpen(true);
+  }
+
+  function closeModalTask() {
+    setIsModalTaskOpen(false);
+  }
+
+  return (
+    <MenuContext.Provider value={{ isOpenMenu, isModalTaskOpen, openSideBarMenu, closeSideBarMenu, openModalTask, closeModalTask }}>
+      {children}
+    </MenuContext.Provider>
+  );
 };
 
 export default MenuContextProvider;

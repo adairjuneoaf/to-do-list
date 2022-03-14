@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { NextPage } from "next";
 import Head from "next/head";
@@ -7,10 +7,14 @@ import { FiSearch } from "react-icons/fi";
 
 import CardTask from "../components/CardTask";
 
+import { MenuContext } from "../../contexts/contextMenuToggle";
+
 import { Container, Content, Footer } from "../../styles/pages/tasks";
 import ButtonNewTask from "../components/ButtonNewTask";
 
 const PageTasks: NextPage = () => {
+  const { openModalTask } = useContext(MenuContext);
+
   return (
     <React.Fragment>
       <Head>
@@ -31,7 +35,7 @@ const PageTasks: NextPage = () => {
         </Content>
       </Container>
       <Footer>
-        <ButtonNewTask />
+        <ButtonNewTask onClick={openModalTask} />
       </Footer>
     </React.Fragment>
   );

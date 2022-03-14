@@ -18,7 +18,7 @@ const CardTask: React.FC = () => {
           <p>Description task card.</p>
         </div>
 
-        <div className="menuTask">
+        <nav className="menuTask">
           <button
             type="button"
             onClick={() => {
@@ -39,7 +39,7 @@ const CardTask: React.FC = () => {
           >
             <Link href={"/"}>
               <a
-                title="Option"
+                title="Atualizar a tarefa"
                 onClick={() => {
                   setShowMenu(false);
                 }}
@@ -50,7 +50,7 @@ const CardTask: React.FC = () => {
             </Link>
             <Link href={"/about"}>
               <a
-                title="Option"
+                title="Excluir a tarefa"
                 onClick={() => {
                   setShowMenu(false);
                 }}
@@ -60,7 +60,7 @@ const CardTask: React.FC = () => {
               </a>
             </Link>
           </div>
-        </div>
+        </nav>
       </div>
 
       <div className="footerTask">

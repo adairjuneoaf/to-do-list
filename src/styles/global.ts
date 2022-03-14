@@ -21,11 +21,6 @@ export default createGlobalStyle`
   --blue-gradient: linear-gradient(90deg, #67A3FF 0%, #418CFF 100%);
 }
 
-.activeMenu {   
-    display: block;
-    visibility: visible;
-}
-
 html{
     @media(max-width: 1080px){
         font-size: 93.75%;
@@ -95,6 +90,66 @@ button {
 span.highlightInformation{
     color: var(--blue-300);
 }
+
+.icon{
+    font-size: 16px;
+    color: var(--black);
+}
+
+.react-modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-modal-content {
+    width: 100%;
+    max-width: 368px;
+    background: var(--white);
+    padding: 25px;
+    position: relative;
+    border-radius: 10px;
+  }
+
+  .buttonCloseModal{
+    width: fit-content;
+    height: fit-content;
+
+    position: absolute;
+    right: 12px;
+    top: 12px;
+
+    border: 0;
+    border-radius: 4px;
+
+    padding: 2px;
+
+    background: transparent;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 0;
+    
+    transition: background-color 0.3s;
+    
+    &:hover{
+    background: var(--gray-100);
+    }
+
+    .iconCloseModal{
+        font-size: 1.5rem;
+    }
+  }
 
 [disable] {
     opacity: 0.6;

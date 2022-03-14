@@ -15,7 +15,7 @@ const Menu: React.FC = () => {
   const { route } = useRouter();
 
   return (
-    <Content className={`${isOpenMenu ? "activeMenu" : ""}`}>
+    <Content className={`${isOpenMenu ? "activeMenu" : "inactiveMenu"}`}>
       <button type="button" className="closeMenu" onClick={closeSideBarMenu} title="Fechar o menu lateral">
         <FiX className="iconButtonCloseMenu" />
       </button>
@@ -30,20 +30,26 @@ const Menu: React.FC = () => {
 
       <div className="divider"></div>
 
-      <section className="menuOptions">
-        <Link href={"/tasks"} passHref>
-          <button type="button" title="Tarefas" className={route === "/tasks" ? "activeRoute" : ""}>
-            <BiTask className="iconOptionsMenu" />
-            <p>Tarefas</p>
-          </button>
-        </Link>
-        <Link href={"/about"} passHref>
-          <button type="button" title="Sobre" className={route === "/about" ? "activeRoute" : ""}>
-            <FiInfo className="iconOptionsMenu" />
-            <p>Sobre</p>
-          </button>
-        </Link>
-      </section>
+      <nav className="menuOptions">
+        <ul>
+          <Link href={"/tasks"} passHref>
+            <li className={route === "/tasks" ? "activeRoute" : ""}>
+              <button type="button" title="Tarefas">
+                <BiTask className="iconOptionsMenu" />
+              </button>
+              Tarefas
+            </li>
+          </Link>
+          <Link href={"/about"} passHref>
+            <li className={route === "/about" ? "activeRoute" : ""}>
+              <button type="button" title="Sobre">
+                <FiInfo className="iconOptionsMenu" />
+              </button>
+              Sobre
+            </li>
+          </Link>
+        </ul>
+      </nav>
     </Content>
   );
 };
