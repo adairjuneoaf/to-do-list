@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 
 import type { AppProps } from "next/app";
 
-import ButtonMenu from "./components/ButtonMenu";
-import Menu from "./components/Menu";
-import Logo from "./components/Logo";
+import ButtonMenu from "../components/ButtonMenu";
+import Menu from "../components/Menu";
+import Logo from "../components/Logo";
 
 import MenuContextProvider, { MenuContext } from "../contexts/contextMenuToggle";
 
 import { Container, Content } from "../styles/pages/_app";
 import GlobalStyle from "../styles/global";
-import NewTaskModal from "./components/NewTaskModal";
+import NewTaskModal from "../components/NewTaskModal";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { isModalTaskOpen } = useContext(MenuContext);

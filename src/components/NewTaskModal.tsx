@@ -3,9 +3,9 @@ import React, { FormEvent, useContext, useState } from "react";
 import Modal from "react-modal";
 import { FiX } from "react-icons/fi";
 
-import { MenuContext } from "../../contexts/contextMenuToggle";
+import { MenuContext } from "../contexts/contextMenuToggle";
 
-import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../../styles/components/NewTaskModal";
+import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/NewTaskModal";
 
 interface NewTaskModalProps {
   isOpen: boolean;

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 
 import { FiMenu } from "react-icons/fi";
-import { MenuContext } from "../../contexts/contextMenuToggle";
+import { MenuContext } from "../contexts/contextMenuToggle";
 
-import { Content } from "../../styles/components/ButtonMenu";
+import { Content } from "../styles/components/ButtonMenu";
 
 interface ButtonProps {
   children?: React.ReactNode;

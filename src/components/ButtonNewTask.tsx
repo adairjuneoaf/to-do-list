@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 
 import { RiAddFill } from "react-icons/ri";
 
-import { Content } from "../../styles/components/ButtonNewTask";
+import { Content } from "../styles/components/ButtonNewTask";
 
 interface ButtonProps {
   children?: React.ReactNode;

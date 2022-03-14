@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import { Container } from "../../styles/components/Logo";
+import { Container } from "../styles/components/Logo";
 
 const Logo: React.FC = () => {
   return (

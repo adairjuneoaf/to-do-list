@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { FiMoreVertical, FiCheck, FiActivity, FiEdit, FiTrash } from "react-icons/fi";
 
-import { Container } from "../../styles/components/CardTask";
+import { Container } from "../styles/components/CardTask";
 
 const CardTask: React.FC = () => {
   let statusTask: boolean = true;
