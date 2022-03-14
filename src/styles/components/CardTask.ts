@@ -18,6 +18,67 @@ export const Container = styled.section`
 
   .menuTask {
     flex: 1;
+    position: relative;
+
+    .activeTooltipMenuOptions {
+      display: block;
+      visibility: visible;
+    }
+
+    .inactiveTooltipMenuOptions {
+      display: none;
+      visibility: hidden;
+    }
+
+    .optionsMenu {
+      position: absolute;
+      min-width: 120px;
+      height: auto;
+
+      padding: 0.5rem;
+
+      background: var(--white);
+
+      border-radius: 6px;
+
+      top: 0;
+      left: -124px;
+
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+
+      gap: 0.25rem;
+
+      a {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        gap: 0.25rem;
+
+        font-size: 0.75rem;
+
+        padding: 0.5rem;
+        border-radius: 4px;
+
+        background: var(--white);
+        color: var(--black);
+
+        transition: background-color 0.3s;
+
+        &:hover {
+          background: var(--blue-300);
+        }
+
+        .iconOption {
+          font-size: 14px;
+        }
+      }
+    }
   }
 
   .menuContentTask {

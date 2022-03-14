@@ -7,7 +7,8 @@ import { FiSearch } from "react-icons/fi";
 
 import CardTask from "../components/CardTask";
 
-import { Container, Content } from "../../styles/pages/tasks";
+import { Container, Content, Footer } from "../../styles/pages/tasks";
+import ButtonNewTask from "../components/ButtonNewTask";
 
 const PageTasks: NextPage = () => {
   return (
@@ -29,6 +30,9 @@ const PageTasks: NextPage = () => {
           <CardTask />
         </Content>
       </Container>
+      <Footer>
+        <ButtonNewTask />
+      </Footer>
     </React.Fragment>
   );
 };

@@ -70,3 +70,20 @@ export const Content = styled.section`
     margin-bottom: 18px;
   }
 `;
+
+export const Footer = styled.footer`
+  position: fixed;
+
+  width: 92vw;
+  height: auto;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  justify-content: flex-end;
+
+  background: transparent;
+
+  bottom: 16px;
+`;
