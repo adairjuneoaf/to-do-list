@@ -1,4 +1,4 @@
-import React, { memo, useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
@@ -101,4 +101,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default memo(PageTasks);
+export default PageTasks;
