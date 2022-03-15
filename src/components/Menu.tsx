@@ -5,12 +5,12 @@ import React, { useContext, useState } from "react";
 import { BiTask } from "react-icons/bi";
 import { FiInfo, FiUser, FiX } from "react-icons/fi";
 
-import { MenuContext } from "../contexts/contextMenuToggle";
+import { GenericContext } from "../contexts/contextGenericApp";
 
 import { Content } from "../styles/components/Menu";
 
 const Menu: React.FC = () => {
-  const { closeSideBarMenu, isOpenMenu } = useContext(MenuContext);
+  const { closeSideBarMenu, isOpenMenu } = useContext(GenericContext);
 
   const { route } = useRouter();
 

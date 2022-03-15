@@ -1,8 +1,12 @@
 import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
+
+import toast from "react-hot-toast";
 
 import { FiMoreVertical, FiCheck, FiActivity, FiEdit, FiTrash } from "react-icons/fi";
 
-import { MenuContext } from "../contexts/contextMenuToggle";
+import { GenericContext } from "../contexts/contextGenericApp";
+import { api } from "../services/axios";
 
 import { Container } from "../styles/components/CardTask";
 
@@ -15,8 +19,23 @@ interface CardTaskProps {
 }
 
 const CardTask: React.FC<CardTaskProps> = ({ title, description, situation, guid }) => {
-  const { openEditModalTask } = useContext(MenuContext);
+  const { openEditModalTask } = useContext(GenericContext);
   const [showMenu, setShowMenu] = useState<boolean>();
+
+  const router = useRouter();
+
+  async function handleDeleteTask(id: string) {
+    await api
+      .delete(`/tasks/${id}`)
+      .then((response) => {
+        toast.success("Tarefa excluida com sucesso! ❌");
+        router.push("/tasks");
+      })
+      .catch((error) => {
+        toast.error("Ops... Houve algum erro! 😥");
+        return;
+      });
+  }
 
   return (
     <Container>
@@ -62,7 +81,7 @@ const CardTask: React.FC<CardTaskProps> = ({ title, description, situation, guid
               className="buttonOption"
               onClick={() => {
                 setShowMenu(false);
-                console.log(guid);
+                handleDeleteTask(guid);
               }}
             >
               <FiTrash className="iconOption" />

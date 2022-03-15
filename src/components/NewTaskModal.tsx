@@ -1,27 +1,30 @@
 import React, { FormEvent, useContext, useState } from "react";
 import { useRouter } from "next/router";
 
+import toast from "react-hot-toast";
+
 import Modal from "react-modal";
 import { FiX } from "react-icons/fi";
 
 import { api } from "../services/axios";
 
-import { MenuContext } from "../contexts/contextMenuToggle";
+import { GenericContext } from "../contexts/contextGenericApp";
 
 import { Container, FormNewTask } from "../styles/components/NewTaskModal";
 
 const NewTaskModal: React.FC = () => {
-  const [nameTask, setNameTask] = useState<string>("");
-  const [descTask, setDescTask] = useState<string>("");
+  const { isModalTaskOpen, closeModalTask } = useContext(GenericContext);
 
-  const { isModalTaskOpen, closeModalTask } = useContext(MenuContext);
+  // Estados para trabalhar com o "FORM" dentro da MODAL.
+  const [descTask, setDescTask] = useState<string>("");
+  const [titleTask, setTitleTask] = useState<string>("");
 
   const router = useRouter();
 
   async function handleResetTask(event: FormEvent) {
     event.preventDefault();
 
-    setNameTask("");
+    setTitleTask("");
     setDescTask("");
 
     closeModalTask();
@@ -30,7 +33,7 @@ const NewTaskModal: React.FC = () => {
   async function handleSubmitTask(event: FormEvent) {
     event.preventDefault();
 
-    if (nameTask.trim() === "") {
+    if (titleTask.trim() === "") {
       console.log("error! task name is empty");
       return;
     }
@@ -42,19 +45,19 @@ const NewTaskModal: React.FC = () => {
 
     await api
       .post("/tasks", {
-        title: nameTask,
+        title: titleTask,
         description: descTask,
       })
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+        toast.success("Tarefa adicionada com sucesso! 🎉");
         router.push("/tasks");
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        toast.error("Ops... Houve algum erro! 😥");
         return;
       });
 
-    setNameTask("");
+    setTitleTask("");
     setDescTask("");
 
     closeModalTask();
@@ -78,7 +81,7 @@ const NewTaskModal: React.FC = () => {
         <label htmlFor="inputTitleTask" className="labelTitle">
           Nome da tarefa
         </label>
-        <input type="text" id="inputTitleTask" placeholder="" value={nameTask} onChange={(event) => setNameTask(event.target.value)} />
+        <input type="text" id="inputTitleTask" placeholder="" value={titleTask} onChange={(event) => setTitleTask(event.target.value)} />
 
         <label htmlFor="inputDescriptionTask" className="labelDescription">
           Descrição da tarefa

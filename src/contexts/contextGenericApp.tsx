@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-interface MenuContextProviderProps {
+interface GenericContextProviderProps {
   children: ReactNode;
 }
 
-interface MenuContextProps {
+interface GenericContextProps {
   isOpenMenu: boolean;
   isModalTaskOpen: boolean;
   openModalTask: () => void;
@@ -18,19 +18,16 @@ interface MenuContextProps {
   openEditModalTask: (guid: string) => void;
 }
 
-interface TaskEditType {
-  guid: string;
-  title: string;
-  situation: string;
-  description: string;
-}
+export const GenericContext = createContext({} as GenericContextProps);
 
-export const MenuContext = createContext({} as MenuContextProps);
-
-const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) => {
+const GenericContextProvider: React.FC<GenericContextProviderProps> = ({ children }) => {
+  // Estado para verificar abertura do MENU lateral.
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  // Estado para verificar abertura da MODAL de Nova Tarefa.
   const [isModalTaskOpen, setIsModalTaskOpen] = useState<boolean>(false);
+  // Estado para compartilhar a terefa selecionada com intuito de Editar ou Excluir.
   const [idSelectedTaskEdit, setIdSelectedTaskEdit] = useState<string>("");
+  // Estado para verificar abertura da MODAL de Editar Tarefa.
   const [isModalEditTaskOpen, setIsModalEditTaskOpen] = useState<boolean>(false);
 
   const router = useRouter();
@@ -56,8 +53,8 @@ const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) =
   }
 
   function openEditModalTask(guid: string) {
-    setIsModalEditTaskOpen(true);
     setIdSelectedTaskEdit(guid);
+    setIsModalEditTaskOpen(true);
   }
 
   function closeEditModalTask() {
@@ -66,7 +63,7 @@ const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) =
   }
 
   return (
-    <MenuContext.Provider
+    <GenericContext.Provider
       value={{
         isOpenMenu,
         openModalTask,
@@ -81,8 +78,8 @@ const MenuContextProvider: React.FC<MenuContextProviderProps> = ({ children }) =
       }}
     >
       {children}
-    </MenuContext.Provider>
+    </GenericContext.Provider>
   );
 };
 
-export default MenuContextProvider;
+export default GenericContextProvider;

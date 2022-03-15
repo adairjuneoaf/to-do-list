@@ -155,4 +155,17 @@ span.highlightInformation{
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.toastsAlerts{
+  width: fit-content;
+  height: auto;
+
+  cursor: default;
+
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+
+  color: var(--black);
+}
 `;

@@ -1,21 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import type { AppProps } from "next/app";
 
+import { Toaster } from "react-hot-toast";
+
+import EditTaskModal from "../components/EditTaskModal";
 import NewTaskModal from "../components/NewTaskModal";
 import ButtonMenu from "../components/ButtonMenu";
 import Menu from "../components/Menu";
 import Logo from "../components/Logo";
 
-import MenuContextProvider, { MenuContext } from "../contexts/contextMenuToggle";
+import GenericContextProvider from "../contexts/contextGenericApp";
 
 import { Container, Content } from "../styles/pages/_app";
 import GlobalStyle from "../styles/global";
-import EditTaskModal from "../components/EditTaskModal";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <MenuContextProvider>
+    <GenericContextProvider>
+      <Toaster position="top-right" reverseOrder={false} toastOptions={{ className: "toastAlerts", duration: 2500 }} />
       <Container>
         <NewTaskModal />
         <EditTaskModal />
@@ -27,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Menu />
       </Container>
       <GlobalStyle />
-    </MenuContextProvider>
+    </GenericContextProvider>
   );
 }
 

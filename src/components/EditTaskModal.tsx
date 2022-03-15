@@ -1,34 +1,55 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import Modal from "react-modal";
 import { FiX } from "react-icons/fi";
 
+import toast from "react-hot-toast";
+
 import { api } from "../services/axios";
 
-import { MenuContext } from "../contexts/contextMenuToggle";
+import { GenericContext } from "../contexts/contextGenericApp";
 
 import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/EditTaskModal";
 
-interface EditTaskModalProps {
+interface TaskEditType {
   guid: string;
-  // title: string;
-  // situation: string;
-  // description: string;
+  title: string;
+  situation: string;
+  description: string;
 }
 
 const EditTaskModal: React.FC = () => {
-  const { isModalEditTaskOpen, closeEditModalTask, idSelectedTaskEdit } = useContext(MenuContext);
+  const { isModalEditTaskOpen, closeEditModalTask, idSelectedTaskEdit } = useContext(GenericContext);
 
-  console.log(idSelectedTaskEdit);
-
-  const [nameTaskEdit, setNameTaskEdit] = useState<string>("");
+  // Estados para trabalhar com o "FORM" dentro da MODAL.
   const [descTaskEdit, setDescTaskEdit] = useState<string>("");
+  const [titleTaskEdit, setTitleTaskEdit] = useState<string>("");
   const [statusTaskEdit, setStatusTaskEdit] = useState<string>("uncompleted");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isModalEditTaskOpen) {
+      (async () => {
+        const { data, status } = await api.get<TaskEditType>(`/tasks/${idSelectedTaskEdit}`);
+
+        if (status !== 200) {
+          toast.error("Ops... Houve algum erro! 😥");
+          return;
+        }
+
+        setTitleTaskEdit(data.title);
+        setDescTaskEdit(data.description);
+        setStatusTaskEdit(data.situation);
+      })();
+    }
+  }, [idSelectedTaskEdit, isModalEditTaskOpen]);
 
   async function handleResetTaskEdit(event: FormEvent) {
     event.preventDefault();
 
-    setNameTaskEdit("");
+    setTitleTaskEdit("");
     setDescTaskEdit("");
     setStatusTaskEdit("");
 
@@ -38,31 +59,33 @@ const EditTaskModal: React.FC = () => {
   async function handleSubmitTaskEdit(event: FormEvent) {
     event.preventDefault();
 
-    if (nameTaskEdit.trim() === "") {
-      console.log("error! task name is empty");
+    if (titleTaskEdit.trim() === "") {
+      toast.error("Houve algum erro com o Título da sua tarefa! 😥");
       return;
     }
 
     if (descTaskEdit.trim() === "") {
-      console.log("error! description task is empty");
+      toast.error("Houve algum erro com a Descrição da sua tarefa! 😥");
       return;
     }
 
-    // await api
-    //   .post("/tasks", {
-    //     title: nameTask,
-    //     description: descTask,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     router.push("/tasks");
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     return;
-    //   });
+    await api
+      .put("/tasks", {
+        guid: idSelectedTaskEdit,
+        title: titleTaskEdit,
+        description: descTaskEdit,
+        situation: statusTaskEdit,
+      })
+      .then((response) => {
+        toast.success("Tarefa alterada com sucesso! 🥳");
+        router.push("/tasks");
+      })
+      .catch((error) => {
+        toast.error("Ops... Houve algum erro! 😥");
+        return;
+      });
 
-    setNameTaskEdit("");
+    setTitleTaskEdit("");
     setDescTaskEdit("");
     setStatusTaskEdit("");
 
@@ -87,7 +110,7 @@ const EditTaskModal: React.FC = () => {
         <label htmlFor="inputTitleTask" className="labelTitle">
           Nome da tarefa
         </label>
-        <input type="text" id="inputTitleTask" placeholder="" value={nameTaskEdit} onChange={(event) => setNameTaskEdit(event.target.value)} />
+        <input type="text" id="inputTitleTask" placeholder="" value={titleTaskEdit} onChange={(event) => setTitleTaskEdit(event.target.value)} />
 
         <label htmlFor="inputDescriptionTask" className="labelDescription">
           Descrição da tarefa
