@@ -16,94 +16,7 @@ export const Container = styled.section`
 
   margin-bottom: 18px;
 
-  .menuTask {
-    flex: 1;
-    position: relative;
-
-    .activeTooltipMenuOptions {
-      display: block;
-      visibility: visible;
-
-      transition: all 0.3s;
-      opacity: 1;
-    }
-
-    .inactiveTooltipMenuOptions {
-      display: none;
-      visibility: hidden;
-
-      transition: all 0.3s;
-      opacity: 0;
-    }
-
-    .optionsMenu {
-      position: absolute;
-      min-width: 120px;
-      height: auto;
-
-      padding: 0.5rem;
-
-      background: var(--white);
-
-      border-radius: 6px 0 6px 6px;
-
-      top: 0;
-      left: -131px;
-
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-
-      gap: 0.25rem;
-
-      box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.1);
-
-      a {
-        width: 100%;
-
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: flex-start;
-
-        gap: 0.25rem;
-
-        font-size: 0.75rem;
-
-        padding: 0.5rem;
-        border-radius: 4px;
-
-        background: var(--white);
-        color: var(--black);
-
-        transition: background-color 0.3s;
-
-        &:hover {
-          background: var(--blue-300);
-        }
-
-        .iconOption {
-          font-size: 14px;
-        }
-      }
-
-      &::after {
-        content: "";
-        width: 9px;
-        height: 25px;
-        background: var(--white);
-
-        position: absolute;
-
-        right: -8.5px;
-        top: -0.5px;
-
-        clip-path: polygon(100% 50%, 0 0, 0 100%);
-      }
-    }
-  }
-
-  .menuContentTask {
+  .menuAndContentTask {
     width: 100%;
 
     flex: 100;
@@ -129,6 +42,7 @@ export const Container = styled.section`
 
     .menuTask {
       flex: 1;
+      position: relative;
 
       button {
         width: fit-content;
@@ -155,6 +69,93 @@ export const Container = styled.section`
         .iconMenuOptions {
           font-size: 18px;
           color: var(--white);
+        }
+      }
+
+      .activeTooltipMenuOptions {
+        display: block;
+        visibility: visible;
+
+        transition: all 0.3s;
+        opacity: 1;
+      }
+
+      .inactiveTooltipMenuOptions {
+        display: none;
+        visibility: hidden;
+
+        transition: all 0.3s;
+        opacity: 0;
+      }
+
+      .optionsMenu {
+        position: absolute;
+        min-width: 120px;
+        height: auto;
+
+        padding: 0.5rem;
+
+        background: var(--white);
+
+        border-radius: 6px 0 6px 6px;
+
+        top: 0;
+        left: -131px;
+
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 0.25rem;
+
+        box-shadow: 0px 0px 8px -2px rgba(0, 0, 0, 0.1);
+
+        button.buttonOption {
+          width: 100%;
+          height: auto;
+
+          padding: 0.5rem;
+          border-radius: 4px;
+
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          justify-content: flex-start;
+
+          gap: 0.25rem;
+
+          font-size: 0;
+
+          background: var(--white);
+          color: var(--black);
+
+          transition: background-color 0.3s;
+
+          p {
+            font-size: 0.75rem;
+          }
+
+          &:hover {
+            background: var(--blue-300);
+          }
+
+          .iconOption {
+            font-size: 14px;
+          }
+        }
+
+        &::after {
+          content: "";
+          width: 9px;
+          height: 25px;
+          background: var(--white);
+
+          position: absolute;
+
+          right: -8.5px;
+          top: -0.5px;
+
+          clip-path: polygon(100% 50%, 0 0, 0 100%);
         }
       }
     }

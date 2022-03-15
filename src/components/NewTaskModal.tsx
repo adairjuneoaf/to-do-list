@@ -1,30 +1,28 @@
 import React, { FormEvent, useContext, useState } from "react";
+import { useRouter } from "next/router";
 
 import Modal from "react-modal";
 import { FiX } from "react-icons/fi";
 
+import { api } from "../services/axios";
+
 import { MenuContext } from "../contexts/contextMenuToggle";
 
-import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/NewTaskModal";
+import { Container, FormNewTask } from "../styles/components/NewTaskModal";
 
-interface NewTaskModalProps {
-  isOpen: boolean;
-  type: "newTask" | "editTask";
-}
-
-const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpen = false, type }) => {
-  const [nameTask, setNameTask] = useState<string>();
-  const [descTask, setDescTask] = useState<string>();
-  const [statusTask, setStatusTask] = useState<string>("inProgress");
+const NewTaskModal: React.FC = () => {
+  const [nameTask, setNameTask] = useState<string>("");
+  const [descTask, setDescTask] = useState<string>("");
 
   const { isModalTaskOpen, closeModalTask } = useContext(MenuContext);
+
+  const router = useRouter();
 
   async function handleResetTask(event: FormEvent) {
     event.preventDefault();
 
     setNameTask("");
     setDescTask("");
-    setStatusTask("");
 
     closeModalTask();
   }
@@ -32,12 +30,37 @@ const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpen = false, type }) => 
   async function handleSubmitTask(event: FormEvent) {
     event.preventDefault();
 
+    if (nameTask.trim() === "") {
+      console.log("error! task name is empty");
+      return;
+    }
+
+    if (descTask.trim() === "") {
+      console.log("error! description task is empty");
+      return;
+    }
+
+    await api
+      .post("/tasks", {
+        title: nameTask,
+        description: descTask,
+      })
+      .then(function (response) {
+        console.log(response);
+        router.push("/tasks");
+      })
+      .catch(function (error) {
+        console.log(error);
+        return;
+      });
+
     setNameTask("");
     setDescTask("");
-    setStatusTask("");
 
     closeModalTask();
   }
+
+  Modal.setAppElement("#__next");
 
   return (
     <Modal isOpen={isModalTaskOpen} onRequestClose={closeModalTask} overlayClassName="react-modal-overlay" className="react-modal-content">
@@ -60,30 +83,7 @@ const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpen = false, type }) => 
         <label htmlFor="inputDescriptionTask" className="labelDescription">
           Descrição da tarefa
         </label>
-        <input type="text" id="inputDescriptionTask" placeholder="" value={descTask} onChange={(event) => setDescTask(event.target.value)} />
-
-        {type === "editTask" && (
-          <ButtonsTaskStatus>
-            <StatusOption
-              isActiveOption={statusTask === "inProgress"}
-              onClick={() => {
-                setStatusTask("inProgress");
-              }}
-              type="button"
-            >
-              <p>Em progreso</p>
-            </StatusOption>
-            <StatusOption
-              isActiveOption={statusTask === "finished"}
-              onClick={() => {
-                setStatusTask("finished");
-              }}
-              type="button"
-            >
-              <p>Concluído</p>
-            </StatusOption>
-          </ButtonsTaskStatus>
-        )}
+        <textarea id="inputDescriptionTask" placeholder="" value={descTask} onChange={(event) => setDescTask(event.target.value)} />
 
         <div className="buttonsActionForm">
           <button type="reset">CANCELAR</button>

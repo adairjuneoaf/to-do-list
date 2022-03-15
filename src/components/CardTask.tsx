@@ -1,24 +1,32 @@
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { FiMoreVertical, FiCheck, FiActivity, FiEdit, FiTrash } from "react-icons/fi";
 
+import { MenuContext } from "../contexts/contextMenuToggle";
+
 import { Container } from "../styles/components/CardTask";
 
-const CardTask: React.FC = () => {
-  let statusTask: boolean = true;
+interface CardTaskProps {
+  guid: string;
+  refId: string;
+  title: string;
+  situation: string;
+  description: string;
+}
 
+const CardTask: React.FC<CardTaskProps> = ({ title, description, situation, guid }) => {
+  const { openEditModalTask } = useContext(MenuContext);
   const [showMenu, setShowMenu] = useState<boolean>();
 
   return (
     <Container>
-      <div className="menuContentTask">
+      <div className="menuAndContentTask">
         <div className="contentTask">
-          <h2>Title Task</h2>
-          <p>Description task card.</p>
+          <h2>{title}</h2>
+          <p>{description}</p>
         </div>
 
-        <nav className="menuTask">
+        <div className="menuTask">
           <button
             type="button"
             onClick={() => {
@@ -28,7 +36,7 @@ const CardTask: React.FC = () => {
           >
             <FiMoreVertical className="iconMenuOptions" />
           </button>
-          <div
+          <nav
             className={`optionsMenu ${showMenu ? "activeTooltipMenuOptions" : "inactiveTooltipMenuOptions"}`}
             onMouseEnter={() => {
               setShowMenu(true);
@@ -37,35 +45,36 @@ const CardTask: React.FC = () => {
               setShowMenu(false);
             }}
           >
-            <Link href={"/"}>
-              <a
-                title="Atualizar a tarefa"
-                onClick={() => {
-                  setShowMenu(false);
-                }}
-              >
-                <FiEdit className="iconOption" />
-                Atualizar tarefa
-              </a>
-            </Link>
-            <Link href={"/about"}>
-              <a
-                title="Excluir a tarefa"
-                onClick={() => {
-                  setShowMenu(false);
-                }}
-              >
-                <FiTrash className="iconOption" />
-                Excluir tarefa
-              </a>
-            </Link>
-          </div>
-        </nav>
+            <button
+              title="Atualizar a tarefa"
+              className="buttonOption"
+              onClick={() => {
+                setShowMenu(false);
+                openEditModalTask(guid);
+              }}
+            >
+              <FiEdit className="iconOption" />
+              <p>Atualizar tarefa</p>
+            </button>
+
+            <button
+              title="Excluir a tarefa"
+              className="buttonOption"
+              onClick={() => {
+                setShowMenu(false);
+                console.log(guid);
+              }}
+            >
+              <FiTrash className="iconOption" />
+              <p>Excluir tarefa</p>
+            </button>
+          </nav>
+        </div>
       </div>
 
       <div className="footerTask">
         <div title="Status da tarefa">
-          {statusTask ? (
+          {situation === "completed" ? (
             <React.Fragment>
               <FiCheck className="iconStatusTask" /> Concluída
             </React.Fragment>

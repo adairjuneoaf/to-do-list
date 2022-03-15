@@ -1,13 +1,9 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 
-type Data = {
-  name: string
-}
+const createNewTask = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method === "POST") {
+  } else res.setHeader("Allow", "POST");
+  res.status(405).end("Method not allowed");
+};
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default createNewTask;
