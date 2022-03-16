@@ -2,11 +2,11 @@ import React, { useContext, useState } from "react";
 
 import { useMutation, useQueryClient } from "react-query";
 
+import { removeTaskOnTheList } from "../services/api";
+
 import { FiMoreVertical, FiCheck, FiActivity, FiEdit, FiTrash } from "react-icons/fi";
 
 import { GenericContext } from "../contexts/contextGenericApp";
-
-import { removeTaskOnTheList } from "../services/api";
 
 import { Container } from "../styles/components/CardTask";
 

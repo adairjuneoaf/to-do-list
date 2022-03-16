@@ -1,6 +1,7 @@
-import Link from "next/link";
+import React, { useContext } from "react";
+
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import Link from "next/link";
 
 import { BiTask } from "react-icons/bi";
 import { FiInfo, FiUser, FiX } from "react-icons/fi";

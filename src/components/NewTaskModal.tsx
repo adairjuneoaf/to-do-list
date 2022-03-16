@@ -1,17 +1,16 @@
 import React, { FormEvent, useContext, useState } from "react";
 
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "react-query";
+
+import { createNewTask } from "../services/api";
 
 import Modal from "react-modal";
-import { FiX } from "react-icons/fi";
 
-import { api } from "../services/axios";
+import { FiX } from "react-icons/fi";
 
 import { GenericContext } from "../contexts/contextGenericApp";
 
 import { Container, FormNewTask } from "../styles/components/NewTaskModal";
-import { useMutation, useQueryClient } from "react-query";
-import { createNewTask } from "../services/api";
 
 const NewTaskModal: React.FC = () => {
   const { isModalTaskOpen, closeModalTask } = useContext(GenericContext);

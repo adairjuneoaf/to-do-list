@@ -1,5 +1,6 @@
-import { useRouter } from "next/router";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+
+import { useRouter } from "next/router";
 
 interface GenericContextProviderProps {
   children: ReactNode;
@@ -30,11 +31,11 @@ const GenericContextProvider: React.FC<GenericContextProviderProps> = ({ childre
   // Estado para verificar abertura da MODAL de Editar Tarefa.
   const [isModalEditTaskOpen, setIsModalEditTaskOpen] = useState<boolean>(false);
 
-  const router = useRouter();
+  const { route } = useRouter();
 
   useEffect(() => {
     setIsOpenMenu(false);
-  }, [router.route]);
+  }, [route]);
 
   function openSideBarMenu() {
     setIsOpenMenu(true);

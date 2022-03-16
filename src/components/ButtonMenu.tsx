@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { FiMenu } from "react-icons/fi";
+
 import { GenericContext } from "../contexts/contextGenericApp";
 
 import { Content } from "../styles/components/ButtonMenu";

@@ -16,20 +16,8 @@ import GenericContextProvider from "../contexts/contextGenericApp";
 
 import { Container, Content } from "../styles/pages/_app";
 import GlobalStyle from "../styles/global";
-import axios from "axios";
 
-// const defaultQueryFn = async ({ queryKey }: any) => {
-//   const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${queryKey[0]}`);
-//   return data;
-// };
-
-const queryClient = new QueryClient({
-  // defaultOptions: {
-  //   queries: {
-  //     queryFn: defaultQueryFn,
-  //   },
-  // },
-});
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

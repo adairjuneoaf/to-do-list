@@ -35,7 +35,7 @@ export const updateUniqueTask = async ({ guid, title, situation, description }: 
       description: description,
     })
     .then(() => {
-      toast.success("Tarefa alterada com sucesso! 🥳");
+      toast.success("Tarefa atualizada com sucesso! 🥳");
     })
     .catch(() => {
       toast.error("Ops... Houve algum erro! 😥");

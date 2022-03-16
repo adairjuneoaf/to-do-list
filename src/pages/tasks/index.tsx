@@ -1,11 +1,12 @@
+import { NextPage } from "next";
+
 import React, { useContext, useMemo, useState } from "react";
 
-import { NextPage } from "next";
 import Head from "next/head";
 
 import { useQuery } from "react-query";
 
-import toast from "react-hot-toast";
+import { getAllTasks } from "../../services/api";
 
 import { FiSearch } from "react-icons/fi";
 
@@ -15,8 +16,6 @@ import CardTask from "../../components/CardTask";
 import { GenericContext } from "../../contexts/contextGenericApp";
 
 import { Container, Content, Footer } from "../../styles/pages/tasks";
-
-import { getAllTasks } from "../../services/api";
 
 interface TaskProps {
   guid: string;
@@ -28,7 +27,10 @@ interface TaskProps {
 const PageTasks: NextPage = () => {
   const { openModalTask } = useContext(GenericContext);
 
-  const { data, error, isLoading, isError } = useQuery("tasks", getAllTasks);
+  const { data, error, isLoading, isError } = useQuery("tasks", getAllTasks, {
+    staleTime: 1000 * 60 * 1, // 1 Minute
+    refetchOnMount: false,
+  });
 
   // Estado para trabalhar com o INPUT de pesquisa das tarefas.
   const [searchValue, setSearchValue] = useState("");
@@ -38,7 +40,7 @@ const PageTasks: NextPage = () => {
     console.log(error);
   }
 
-  // Constante responsavel por entregar os dados filtrados utilizando o input de pesquisa.
+  // Constante responsável por entregar os dados filtrados utilizando o input de pesquisa.
 
   const filteredData = useMemo(() => data?.filter(({ title }) => title.toLowerCase().includes(searchValue.toLowerCase())), [data, searchValue]);
 
@@ -77,8 +79,6 @@ const PageTasks: NextPage = () => {
           {searchValue.trim()
             ? filteredData?.map((task) => <CardTask key={task.guid} {...task} />)
             : data?.map((task: TaskProps) => <CardTask key={task.guid} {...task} />)}
-
-          {/* {!data ?  : data.map((task: TaskProps) => <CardTask key={task.guid} {...task} />)} */}
         </Content>
       </Container>
       <Footer>

@@ -16,6 +16,7 @@ export const Content = styled.aside`
   &.activeMenu {
     left: 0;
     opacity: 1;
+    position: fixed;
 
     transition: left 0.6s, opacity 0.3s;
   }

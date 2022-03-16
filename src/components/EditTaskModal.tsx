@@ -1,24 +1,18 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 
+import { useMutation, useQueryClient } from "react-query";
+
+import { getUniqueTask, updateUniqueTask } from "../services/api";
+
 import Modal from "react-modal";
+
 import { FiX } from "react-icons/fi";
-
-import toast from "react-hot-toast";
-
-import { api } from "../services/axios";
 
 import { GenericContext } from "../contexts/contextGenericApp";
 
-import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/EditTaskModal";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getUniqueTask, updateUniqueTask } from "../services/api";
+import toast from "react-hot-toast";
 
-interface TaskEditType {
-  guid: string;
-  title: string;
-  situation: string;
-  description: string;
-}
+import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/EditTaskModal";
 
 const EditTaskModal: React.FC = () => {
   const { isModalEditTaskOpen, closeEditModalTask, idSelectedTaskEdit } = useContext(GenericContext);
