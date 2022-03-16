@@ -1,5 +1,4 @@
 import React, { FormEvent, useContext, useState } from "react";
-import { useRouter } from "next/router";
 
 import toast from "react-hot-toast";
 
@@ -11,6 +10,8 @@ import { api } from "../services/axios";
 import { GenericContext } from "../contexts/contextGenericApp";
 
 import { Container, FormNewTask } from "../styles/components/NewTaskModal";
+import { useMutation, useQueryClient } from "react-query";
+import { createNewTask } from "../services/api";
 
 const NewTaskModal: React.FC = () => {
   const { isModalTaskOpen, closeModalTask } = useContext(GenericContext);
@@ -19,7 +20,8 @@ const NewTaskModal: React.FC = () => {
   const [descTask, setDescTask] = useState<string>("");
   const [titleTask, setTitleTask] = useState<string>("");
 
-  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation(createNewTask);
 
   async function handleResetTask(event: FormEvent) {
     event.preventDefault();
@@ -43,19 +45,8 @@ const NewTaskModal: React.FC = () => {
       return;
     }
 
-    await api
-      .post("/tasks", {
-        title: titleTask,
-        description: descTask,
-      })
-      .then((response) => {
-        toast.success("Tarefa adicionada com sucesso! 🎉");
-        router.push("/tasks");
-      })
-      .catch((error) => {
-        toast.error("Ops... Houve algum erro! 😥");
-        return;
-      });
+    await mutateAsync({ title: titleTask, description: descTask });
+    queryClient.invalidateQueries("tasks");
 
     setTitleTask("");
     setDescTask("");
@@ -98,3 +89,6 @@ const NewTaskModal: React.FC = () => {
 };
 
 export default NewTaskModal;
+function mutateAsync(arg0: { guid: any; title: any; description: any; situation: any }) {
+  throw new Error("Function not implemented.");
+}

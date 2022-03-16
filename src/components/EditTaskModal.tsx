@@ -1,5 +1,4 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 import Modal from "react-modal";
 import { FiX } from "react-icons/fi";
@@ -11,6 +10,8 @@ import { api } from "../services/axios";
 import { GenericContext } from "../contexts/contextGenericApp";
 
 import { ButtonsTaskStatus, Container, FormNewTask, StatusOption } from "../styles/components/EditTaskModal";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getUniqueTask, updateUniqueTask } from "../services/api";
 
 interface TaskEditType {
   guid: string;
@@ -27,17 +28,13 @@ const EditTaskModal: React.FC = () => {
   const [titleTaskEdit, setTitleTaskEdit] = useState<string>("");
   const [statusTaskEdit, setStatusTaskEdit] = useState<string>("uncompleted");
 
-  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation(updateUniqueTask);
 
   useEffect(() => {
     if (isModalEditTaskOpen) {
       (async () => {
-        const { data, status } = await api.get<TaskEditType>(`/tasks/${idSelectedTaskEdit}`);
-
-        if (status !== 200) {
-          toast.error("Ops... Houve algum erro! 😥");
-          return;
-        }
+        const data = await getUniqueTask(idSelectedTaskEdit);
 
         setTitleTaskEdit(data.title);
         setDescTaskEdit(data.description);
@@ -69,21 +66,8 @@ const EditTaskModal: React.FC = () => {
       return;
     }
 
-    await api
-      .put("/tasks", {
-        guid: idSelectedTaskEdit,
-        title: titleTaskEdit,
-        description: descTaskEdit,
-        situation: statusTaskEdit,
-      })
-      .then((response) => {
-        toast.success("Tarefa alterada com sucesso! 🥳");
-        router.push("/tasks");
-      })
-      .catch((error) => {
-        toast.error("Ops... Houve algum erro! 😥");
-        return;
-      });
+    await mutateAsync({ guid: idSelectedTaskEdit, title: titleTaskEdit, description: descTaskEdit, situation: statusTaskEdit });
+    queryClient.invalidateQueries("tasks");
 
     setTitleTaskEdit("");
     setDescTaskEdit("");

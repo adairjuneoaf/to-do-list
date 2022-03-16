@@ -1,18 +1,17 @@
 import React, { useContext, useState } from "react";
-import { useRouter } from "next/router";
 
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "react-query";
 
 import { FiMoreVertical, FiCheck, FiActivity, FiEdit, FiTrash } from "react-icons/fi";
 
 import { GenericContext } from "../contexts/contextGenericApp";
-import { api } from "../services/axios";
+
+import { removeTaskOnTheList } from "../services/api";
 
 import { Container } from "../styles/components/CardTask";
 
 interface CardTaskProps {
   guid: string;
-  refId: string;
   title: string;
   situation: string;
   description: string;
@@ -22,19 +21,12 @@ const CardTask: React.FC<CardTaskProps> = ({ title, description, situation, guid
   const { openEditModalTask } = useContext(GenericContext);
   const [showMenu, setShowMenu] = useState<boolean>();
 
-  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation(removeTaskOnTheList);
 
-  async function handleDeleteTask(id: string) {
-    await api
-      .delete(`/tasks/${id}`)
-      .then((response) => {
-        toast.success("Tarefa excluida com sucesso! ❌");
-        router.push("/tasks");
-      })
-      .catch((error) => {
-        toast.error("Ops... Houve algum erro! 😥");
-        return;
-      });
+  async function handleDeleteTask(guid: string) {
+    await mutateAsync(guid);
+    queryClient.invalidateQueries("tasks");
   }
 
   return (

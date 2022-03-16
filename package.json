@@ -19,6 +19,7 @@
     "react-icons": "^4.3.1",
     "react-modal": "^3.14.4",
     "react-power-tooltip": "^1.0.2",
+    "react-query": "^3.34.16",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

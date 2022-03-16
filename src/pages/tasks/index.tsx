@@ -1,56 +1,46 @@
 import React, { useContext, useMemo, useState } from "react";
 
-import { GetStaticProps, NextPage } from "next";
+import { NextPage } from "next";
 import Head from "next/head";
+
+import { useQuery } from "react-query";
+
+import toast from "react-hot-toast";
 
 import { FiSearch } from "react-icons/fi";
 
 import ButtonNewTask from "../../components/ButtonNewTask";
 import CardTask from "../../components/CardTask";
 
-import { api } from "../../services/axios";
-
 import { GenericContext } from "../../contexts/contextGenericApp";
 
 import { Container, Content, Footer } from "../../styles/pages/tasks";
-import toast from "react-hot-toast";
+
+import { getAllTasks } from "../../services/api";
 
 interface TaskProps {
   guid: string;
-  refId: string;
   title: string;
   situation: string;
   description: string;
 }
 
-interface PageTasksProps {
-  data: Array<TaskProps>;
-  status: number;
-  statusText: string;
-}
-
-const PageTasks: NextPage<PageTasksProps> = ({ data, status, statusText }) => {
+const PageTasks: NextPage = () => {
   const { openModalTask } = useContext(GenericContext);
+
+  const { data, error, isLoading, isError } = useQuery("tasks", getAllTasks);
 
   // Estado para trabalhar com o INPUT de pesquisa das tarefas.
   const [searchValue, setSearchValue] = useState("");
 
   // Teste simples para verificar se existe algum dado na constante sendo assim evitando erros no "filteredData".
-  if (!data) {
-    data = [];
-  }
-
-  // Testes simples para informar ao usuário erros caso ocorram.
-  if (status === 400) {
-    toast.error(`Status: ${statusText} ❌`);
-  }
-
-  if (status === 500) {
-    toast.error(`Status: ${statusText} ❌`);
+  if (isError) {
+    console.log(error);
   }
 
   // Constante responsavel por entregar os dados filtrados utilizando o input de pesquisa.
-  const filteredData = useMemo(() => data.filter(({ title }) => title.toLowerCase().includes(searchValue.toLowerCase())), [data, searchValue]);
+
+  const filteredData = useMemo(() => data?.filter(({ title }) => title.toLowerCase().includes(searchValue.toLowerCase())), [data, searchValue]);
 
   return (
     <React.Fragment>
@@ -74,11 +64,21 @@ const PageTasks: NextPage<PageTasksProps> = ({ data, status, statusText }) => {
           </div>
           <h1>Tarefas</h1>
 
+          {isLoading && (
+            <p>
+              Carregando...
+              <br />
+              <br />
+            </p>
+          )}
+
+          {!data && <p>Não há tarefas na sua lista... 😓</p>}
+
           {searchValue.trim()
             ? filteredData?.map((task) => <CardTask key={task.guid} {...task} />)
-            : data?.map((task) => <CardTask key={task.guid} {...task} />)}
+            : data?.map((task: TaskProps) => <CardTask key={task.guid} {...task} />)}
 
-          {status === 204 && <p>Não há tarefas na sua lista... 😓</p>}
+          {/* {!data ?  : data.map((task: TaskProps) => <CardTask key={task.guid} {...task} />)} */}
         </Content>
       </Container>
       <Footer>
@@ -90,15 +90,6 @@ const PageTasks: NextPage<PageTasksProps> = ({ data, status, statusText }) => {
       </Footer>
     </React.Fragment>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const { data, status, statusText } = await api.get<PageTasksProps>("/tasks");
-
-  return {
-    props: { data, status, statusText },
-    revalidate: 60 * 60 * 1, //1 Hora,
-  };
 };
 
 export default PageTasks;
