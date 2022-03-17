@@ -60,4 +60,9 @@ export const Container = styled.main`
       }
     }
   }
+
+  @media only screen and (min-width: 1200px) {
+    width: calc(92vw - 196px);
+    margin-right: 3rem;
+  }
 `;

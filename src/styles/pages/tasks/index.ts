@@ -86,4 +86,9 @@ export const Footer = styled.footer`
   background: transparent;
 
   bottom: 16px;
+
+  @media only screen and (min-width: 1200px) {
+    width: calc(92vw - 196px);
+    margin-right: 3rem;
+  }
 `;

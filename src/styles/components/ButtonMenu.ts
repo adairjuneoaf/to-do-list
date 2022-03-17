@@ -25,4 +25,9 @@ export const Content = styled.button`
       color: var(--blue-300);
     }
   }
+
+  @media only screen and (min-width: 1200px) {
+    display: none;
+    opacity: 0;
+  }
 `;

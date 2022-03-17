@@ -26,6 +26,7 @@ export const Content = styled.aside`
 
     left: -196px;
     opacity: 0;
+    position: absolute;
   }
 
   .closeMenu {
@@ -150,6 +151,29 @@ export const Content = styled.aside`
 
     .activeRoute {
       background: var(--blue-300);
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    width: 196px;
+    height: 100vh;
+
+    top: 0;
+    left: 0px;
+
+    position: fixed;
+
+    &.inactiveMenu {
+      left: 0px;
+      opacity: 1;
+
+      display: block;
+      position: fixed;
+    }
+
+    .closeMenu {
+      display: none;
+      opacity: 0;
     }
   }
 `;

@@ -7,10 +7,19 @@ export const Container = styled.section`
   margin: 0 auto;
 
   padding: 16px 0rem;
+  @media only screen and (min-width: 1200px) {
+    width: calc(92vw - 196px);
+    margin-right: 3rem;
+  }
 `;
 
 export const Content = styled.header`
   display: flex;
   align-items: center;
   flex-direction: row;
+
+  @media only screen and (min-width: 1200px) {
+    width: calc(92vw - 196px);
+    margin-right: 3rem;
+  }
 `;

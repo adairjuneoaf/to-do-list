@@ -13,12 +13,10 @@ export const Container = styled.section`
   justify-content: center;
 
   color: var(--gray-100);
-  //opacity: 0.5;
 
   .iconSuggestPath {
     font-size: 24px;
     color: var(--gray-100);
-    //opacity: 0.5;
   }
 
   p {
